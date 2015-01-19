@@ -1,0 +1,22 @@
+[user]
+	name = Gayan
+	email = gayanhewa@gmail.com
+[core]
+	excludesfile = ~/.gitignore
+	editor = emacs 
+[commit]
+	template = ~/.git-commit-template
+[init]
+	templatedir = ~/.git_template
+[hub]
+	protocol = git
+	username = gayanhewa
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	unstage = reset --
+[diff "sopsdiffer"]
+	textconv = sops -d

@@ -1,0 +1,8 @@
+* Personal configuration files
+
+Use gnustow to link the files
+
+```
+   stow -vt ~/.emacs.d/ emacs/
+   stow -vt ~/ git/
+```

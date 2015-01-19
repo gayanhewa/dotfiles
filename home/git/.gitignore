@@ -1,0 +1,7 @@
+.idea/
+.vscode*
+.history/
+secrets.el
+.editorconfig
+.env
+

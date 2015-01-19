@@ -1,0 +1,9 @@
+elpa/
+secrets.el
+private
+projectile-bookmarks.eld
+transient
+recentf
+.emacs.d/.cache/
+.emacs.d/.lsp-session-v1
+.emacs.d/lsp-cache/
