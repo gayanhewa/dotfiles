@@ -2,7 +2,7 @@
 
 Use gnustow to link the files
 
-```
+#+BEGIN_SRC bash
    stow -vt ~/.emacs.d/ emacs/
    stow -vt ~/ git/
-```
+#+END_SRC
