@@ -532,6 +532,7 @@
 	 ("s-P" . helm-M-x)
 	 ("s-f" . helm-occur)
 	 ("C-x C-f" . helm-find-files)
+	 ("s-f" . helm-projectile-find-file)
 	 ("C-x v" . helm-projectile)
 	 ("C-x c o" . helm-occur)
 	 ("s-b" . helm-buffers-list)
