@@ -151,7 +151,7 @@
   :diminish
   :config
   (global-git-gutter-mode 't)
-  (set-face-background 'git-gutter:modified 'nil)   ;; background color
+  (set-face-background 'git-gutter:modified "yellow")   ;; background color
   (set-face-foreground 'git-gutter:added "green4")
   (set-face-foreground 'git-gutter:deleted "red"))
 
@@ -212,7 +212,6 @@
   :hook (after-init . doom-modeline-mode))
 
 (use-package treemacs
-  :ensure t
   :defer t
   :init
   (with-eval-after-load 'winum
@@ -329,6 +328,9 @@
   (ruby-mode . lsp)
   (js-mode . lsp)
   (ts-mode . lsp)
+  (html-mode . lsp)
+  (bash-mode . lsp)
+  (dockerfile-mode . lsp)
   :commands lsp)
 
 ;; fancy lsp-ui
@@ -361,21 +363,21 @@
       company-lsp-async t
       company-lsp-cache-candidates nil)
 
-;; ;; Debugger config
-;; (use-package dap-mode
-;;   :diminish
-;;   :functions dap-hydra/nil
-;;   :bind (:map lsp-mode-map
-;;               ("<f5>" . dap-debug)
-;;               ("M-<f5>" . dap-hydra))
-;;   :hook ((after-init . dap-mode)
-;;          (dap-mode . dap-ui-mode)
-;;          (dap-session-created . (lambda (&_rest) (dap-hydra)))
-;;          (dap-terminated . (lambda (&_rest) (dap-hydra/nil)))
-;;          (go-mode . (lambda () (require 'dap-go)))
-;;          (php-mode . (lambda () (require 'dap-php)))
-;;          ((js-mode js2-mode) . (lambda () (require 'dap-chrome))))
-;;   )
+;; Debugger config
+(use-package dap-mode
+  :diminish
+  :functions dap-hydra/nil
+  :bind (:map lsp-mode-map
+              ("<f5>" . dap-debug)
+              ("M-<f5>" . dap-hydra))
+  :hook ((after-init . dap-mode)
+         (dap-mode . dap-ui-mode)
+         (dap-session-created . (lambda (&_rest) (dap-hydra)))
+         (dap-terminated . (lambda (&_rest) (dap-hydra/nil)))
+         (go-mode . (lambda () (require 'dap-go)))
+         (php-mode . (lambda () (require 'dap-php)))
+         ((js-mode js2-mode) . (lambda () (require 'dap-chrome))))
+  )
 
 (use-package yasnippet
   :config
@@ -398,7 +400,7 @@
 (use-package phpunit
   :ensure t)
 
-(use-package web-mode
+(use-package web-modetlm
   :bind (("C-c ]" . emmet-next-edit-point)
          ("C-c [" . emmet-prev-edit-point)
          ("C-c o b" . browse-url-of-file))
@@ -407,8 +409,6 @@
    ("\\.html?\\'" . web-mode)
    ("\\.phtml?\\'" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
-   ("\\.[agj]sp\\'" . web-mode)
-   ("\\.as[cp]x\\'" . web-mode)
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode)
@@ -465,17 +465,6 @@
 	      (unless tern-mode (tern-mode))
 	    (if tern-mode (tern-mode -1))))))
   (add-hook 'web-mode-hook 'company-mode)
-
-  ;; to get completion data for angularJS
-  (use-package ac-html-angular :defer t)
-  ;; to get completion for twitter bootstrap
-  (use-package ac-html-bootstrap :defer t)
-
-  ;; to get completion for HTML stuff
-  ;; https://github.com/osv/company-web
-  (use-package company-web)
-
-  (add-hook 'web-mode-hook 'company-mode))
 
 ;; configure CSS mode company backends
 (use-package css-mode
@@ -769,3 +758,7 @@
 ;; php-unit
 (global-set-key (kbd "C-c C-t") 'phpunit-current-test)
 (global-set-key (kbd "C-c M-t") 'phpunit-current-class)
+
+;; rebinding M-x
+(global-set-key (kbd "C-c C-m") 'helm-M-x)
+(global-set-key (kbd "C-x C-m") 'helm-M-x)
