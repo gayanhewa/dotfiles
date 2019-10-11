@@ -1,7 +1,14 @@
 .idea/
 .vscode*
+.vscode/
 .history/
 secrets.el
 .editorconfig
 .env
+
+#Projectile flags
+.project
+
+# Work related
+.easir-development
 
