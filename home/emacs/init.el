@@ -144,6 +144,7 @@
 ;; Magit
 (use-package magit
   :config
+  (helm-mode)
   (global-set-key (kbd "s-g") 'magit-status))   ;; Cmd+g for git status
 
 ;; Show changes in the gutter
@@ -315,8 +316,9 @@
 (use-package company
   :config
   (setq company-idle-delay 0.3)
-  (global-company-mode 1)
   (global-set-key (kbd "C-<tab>") 'company-complete))
+
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; language server protocol config
 (use-package lsp-mode
@@ -339,18 +341,45 @@
   :config
   (setq lsp-ui-doc-enable t
         lsp-ui-doc-use-childframe nil
+	lsp-ui-doc-header t
         lsp-ui-doc-position 'top
         lsp-ui-doc-include-signature t
-        lsp-ui-sideline-enable nil
-        lsp-ui-flycheck-enable t
+	lsp-ui-doc-max-width 120
+	lsp-ui-doc-max-height 30
+	lsp-ui-doc-use-childframe t
+	lsp-ui-doc-use-webkit t
+
+        lsp-ui-flycheck-enable nil
         lsp-ui-flycheck-list-position 'right
         lsp-ui-flycheck-live-reporting t
-        lsp-ui-peek-enable t
+
+	lsp-ui-peek-enable t
+	lsp-ui-peek-fontify 'always
+	lsp-ui-peak-always-show t
         lsp-ui-peek-list-width 60
-        lsp-ui-peek-peek-height 25
-        lsp-ui-sideline-enable nil
-        lsp-ui-sideline-toggle-symbol-info nil)
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+        lsp-ui-peek-peek-height 20
+
+	lsp-ui-imenu-enable t
+	lsp-ui-imenu-kind-position 'top
+
+	lsp-ui-sideline-enable t
+	lsp-ui-sideline-show-symbol nil
+
+	lsp-ui-sideline-show-hover t
+	lsp-ui-sideline-ignore-duplicate t
+	lsp-ui-sideline-show-diagnostics t
+	lsp-ui-sideline-show-code-actions t
+	lsp-ui-sideline-code-actions-prefix  "[]"
+	lsp-ui-sideline-update-mode 'line
+        lsp-ui-sideline-toggle-symbol-info t)
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  :bind
+  (:map lsp-mode-map
+	("C-c C-l" . lsp-ui-mode)
+	("C-c C-f" . lsp-ui-flycheck-enable)
+	("C-c m" . lsp-ui-imenu)
+	("C-c s" . lsp-ui-sideline-mode)
+  ))
 
 (use-package company-lsp
   :commands company-lsp)
@@ -361,7 +390,10 @@
  ;; Disable client-side cache because the LSP server does a better job.
 (setq company-transformers nil
       company-lsp-async t
-      company-lsp-cache-candidates nil)
+      company-lsp-enable-recompletion t
+      company-lsp-cache-candidates 'auto)
+
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
 
 ;; Debugger config
 (use-package dap-mode
@@ -456,6 +488,7 @@
 (use-package helm-ag)
 (add-to-list 'exec-path "/usr/local/bin/")
 
+(use-package helm-org)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Org-mode settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package org
   :config
@@ -502,6 +535,8 @@
       (file "~/Dropbox/Orgmode/tpl-jrnl.txt"))
      ("w" "Weekly review" plain (file+olp+datetree "~/Dropbox/Orgmode/weekly-reviews.org")
       (file "~/Dropbox/Orgmode/tpl-weekly-review.txt") :tree-type week)))
+
+  (setq org-refile-use-outline-path 'file)
 
   (require 'org-habit)
   :bind
