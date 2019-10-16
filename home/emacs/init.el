@@ -134,6 +134,7 @@
 (use-package projectile
   :config
   (setq projectile-completion-system 'helm)
+  (setq projectile-track-known-projects-automatically nil)
   (define-key projectile-mode-map (kbd "C-s-p") 'projectile-command-map) ;; Ctrl+Cmd+p show projectile menu
   (define-key projectile-mode-map (kbd "C-c P") 'projectile-command-map)
   (projectile-mode +1))
